@@ -132,10 +132,10 @@ Ampliar o acesso à leitura e promover a educação na comunidade.
 
 | Entidade     | Criação | Leitura | Atualização | Remoção |
 |--------------|---------|---------|-------------|---------|
-| Usuário      | ✅       | ✅       | ✅           | ✅       |
-| Livro        | ✅       | ✅       | ✅           | ✅       |
-| Reserva      | ✅       | ✅       | ❌           | ✅       |
-| Avaliação    | ✅       | ✅       | ✅           | ❌       |
+| Usuário      | ❌       | ❌       | ❌           | ❌       |
+| Livro        | ❌       | ❌       | ❌           | ❌       |
+| Reserva      | ❌       | ❌       | ❌           | ❌       |
+| Avaliação    | ❌       | ❌       | ❌           | ❌       |
 
 > Lembre-se que é necessário implementar o CRUD de pelo menos duas entidades.
 
