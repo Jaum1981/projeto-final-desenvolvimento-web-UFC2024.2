@@ -102,12 +102,11 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 ## :desktop_computer: Tecnologias e Frameworks Utilizados  
 
 ### **Frontend**  
-- React.js  
-- TailwindCSS  
+- Especifique as tecnologias, frameworks e bibliotecas utilizadas.  
 
 ### **Backend**  
-- Node.js com Express.js  
-- Banco de Dados MongoDB  
+- Especifique as tecnologias, frameworks e bibliotecas utilizadas.
+
 
 ---
 
