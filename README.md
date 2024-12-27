@@ -1,153 +1,136 @@
-# :checkered_flag: Biblioteca Digital Comunitária
+# :recycle: Sistema de Troca de Alimentos e Redução de Desperdício  
 
-Uma biblioteca digital para catalogar livros e materiais de estudo acessíveis à comunidade.
-
----
-
-## :technologist: Membros da Equipe
-- **João Victor Amarante Diniz** - 510466
+Uma plataforma digital para incentivar a troca e doação de alimentos excedentes na comunidade, promovendo a sustentabilidade e a solidariedade.  
 
 ---
 
-## :bulb: Objetivo Geral
-Ampliar o acesso à leitura e promover a educação na comunidade.
+## :technologist: Membros da Equipe  
+- **João Victor Amarante Diniz** - 510466  
 
 ---
 
-## :eyes: Público-Alvo
-- Comunidades locais, estudantes e professores.
+## :bulb: Objetivo Geral  
+Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros da comunidade por meio de uma plataforma acessível e intuitiva.  
 
 ---
 
-## :star2: Impacto Esperado
-- Facilitar o acesso à leitura e ao aprendizado por meio de materiais digitais.
-- Beneficiar a comunidade local, estudantes e professores.
+## :eyes: Público-Alvo  
+- Comunidades locais, pequenos comerciantes, ONGs e famílias interessadas em trocar ou doar alimentos.  
 
 ---
 
-## :people_holding_hands: Papéis ou Tipos de Usuário da Aplicação
+## :star2: Impacto Esperado  
+- Diminuir o desperdício de alimentos na comunidade.  
+- Incentivar a economia circular e a solidariedade.  
+- Facilitar a logística de doação e troca de alimentos entre os usuários.  
+
+---
+
+## :people_holding_hands: Papéis ou Tipos de Usuário da Aplicação  
 
 1. **Administrador**  
-   - Acesso a todas as funcionalidades administrativas e gerenciamento do sistema.
-   
-2. **Moderador**  
-   - Responsável por revisar avaliações e comentários, além de gerenciar reservas.
+   - Gerenciamento do sistema, incluindo usuários, itens cadastrados e relatórios.  
 
-3. **Leitor (Usuário Logado)**  
-   - Acesso restrito para realizar reservas, downloads, avaliações e histórico.
+2. **Usuário Logado**  
+   - Pode cadastrar alimentos para troca/doação, buscar alimentos disponíveis e interagir com outros usuários.  
 
-4. **Usuário Não Logado**  
-   - Acesso limitado a consulta ao catálogo e visualização de detalhes dos livros.
+3. **Usuário Não Logado**  
+   - Pode apenas visualizar os alimentos disponíveis no sistema.  
 
-> A aplicação deve possuir funcionalidades acessíveis a todos os usuários e outras restritas a certos tipos de usuários.
+> A aplicação deve ser inclusiva, mas certas funcionalidades são restritas a usuários logados.  
 
 ---
 
-## :triangular_flag_on_post: Principais Funcionalidades da Aplicação
+## :triangular_flag_on_post: Principais Funcionalidades da Aplicação  
 
-### Funcionalidades Acessíveis a Todos os Usuários (Inclusivas)
-- **Consulta ao Catálogo**  
-  - Navegação e busca por livros e materiais disponíveis por título, autor ou categoria.
+### Funcionalidades Acessíveis a Todos os Usuários (Inclusivas)  
+- **Consulta de Alimentos Disponíveis**  
+  - Busca por alimentos cadastrados com base na localização, tipo e prazo de validade.  
 - **Visualização de Detalhes**  
-  - Informações básicas de cada livro, como título, autor, descrição e disponibilidade.
+  - Exibição das informações de cada alimento, como descrição, local de coleta e disponibilidade.  
 
-### Funcionalidades Restritas a Usuários Logados
-- **Sistema de Reservas**  
-  - Permitir reservas de livros físicos disponíveis no acervo.
-- **Downloads de Materiais**  
-  - Acesso para baixar PDFs de materiais em domínio público ou autorizados.
-- **Avaliações e Comentários**  
-  - Opção para avaliar livros e comentar, ajudando outros usuários.
-- **Histórico de Interações**  
-  - Visualizar histórico de reservas, downloads e avaliações realizadas.
+### Funcionalidades Restritas a Usuários Logados  
+- **Cadastro de Alimentos**  
+  - Inserir alimentos excedentes com descrição, fotos, prazo de validade e local de coleta.  
+- **Trocas e Doações**  
+  - Solicitar alimentos cadastrados por outros usuários e negociar trocas.  
+- **Histórico de Atividades**  
+  - Acompanhar o histórico de alimentos doados, recebidos ou trocados.  
 
-### Funcionalidades Exclusivas do Administrador
-- **Gerenciamento do Catálogo**  
-  - Adicionar, editar ou remover livros e materiais no acervo.
+### Funcionalidades Exclusivas do Administrador  
 - **Gerenciamento de Usuários**  
-  - Monitorar e editar contas de usuários, incluindo permissões.
-- **Acompanhamento de Relatórios**  
-  - Acessar estatísticas de uso, como reservas realizadas e materiais baixados.
+  - Monitorar e editar contas de usuários, incluindo permissões e atividades suspeitas.  
+- **Gerenciamento de Alimentos**  
+  - Editar ou remover alimentos cadastrados que violem as políticas da plataforma.  
+- **Relatórios de Impacto**  
+  - Acompanhar estatísticas de alimentos trocados e doados.  
 
 ---
 
-## :spiral_calendar: Entidades ou Tabelas do Sistema
+## :spiral_calendar: Entidades ou Tabelas do Sistema  
 
-### 1. Usuário
+### 1. Usuário  
 - **Atributos Principais**:  
   - ID do Usuário  
   - Nome  
   - Email  
   - Senha  
-  - Tipo (Administrador ou Leitor)  
+  - Tipo (Administrador ou Usuário Comum)  
   - Data de Registro  
 
-### 2. Livro
+### 2. Alimento  
 - **Atributos Principais**:  
-  - ID do Livro  
-  - Título  
-  - Autor(es)  
-  - Gênero  
+  - ID do Alimento  
+  - Nome  
   - Descrição  
-  - Disponibilidade (Sim/Não)  
-  - Quantidade de Exemplares Físicos  
-  - Link para Download  
+  - Tipo (ex.: Frutas, Vegetais, Cereais)  
+  - Foto  
+  - Localização  
+  - Prazo de Validade  
+  - Status (Disponível, Reservado, Indisponível)  
 
-### 3. Reserva
+### 3. Troca ou Doação  
 - **Atributos Principais**:  
-  - ID da Reserva  
-  - ID do Usuário (quem reservou)  
-  - ID do Livro  
-  - Data da Reserva  
-  - Status (Pendente, Aprovada, Cancelada)  
-
-### 4. Avaliação
-- **Atributos Principais**:  
-  - ID da Avaliação  
-  - ID do Usuário  
-  - ID do Livro  
-  - Nota (1 a 5)  
-  - Comentário  
-  - Data da Avaliação  
-
-### 5. Gênero
-- **Atributos Principais**:  
-  - ID do Gênero  
-  - Nome do Gênero (ex.: Romance, Ciência, Tecnologia)  
-  - Descrição  
+  - ID da Troca/Doação  
+  - ID do Usuário (solicitante)  
+  - ID do Alimento  
+  - Data da Solicitação  
+  - Status (Pendente, Concluída, Cancelada)  
 
 ---
 
-## :desktop_computer: Tecnologias e Frameworks Utilizados
+## :desktop_computer: Tecnologias e Frameworks Utilizados  
 
 ### **Frontend**  
-- Especifique as tecnologias, frameworks e bibliotecas utilizadas.  
+- React.js  
+- TailwindCSS  
 
 ### **Backend**  
-- Especifique as tecnologias, frameworks e bibliotecas utilizadas.
+- Node.js com Express.js  
+- Banco de Dados MongoDB  
 
 ---
 
-## :shipit: Operações Implementadas para Cada Entidade da Aplicação
+## :shipit: Operações Implementadas para Cada Entidade da Aplicação  
 
-| Entidade     | Criação | Leitura | Atualização | Remoção |
-|--------------|---------|---------|-------------|---------|
-| Usuário      | ❌       | ❌       | ❌           | ❌       |
-| Livro        | ❌       | ❌       | ❌           | ❌       |
-| Reserva      | ❌       | ❌       | ❌           | ❌       |
-| Avaliação    | ❌       | ❌       | ❌           | ❌       |
+| Entidade     | Criação | Leitura | Atualização | Remoção |  
+|--------------|---------|---------|-------------|---------|  
+| Usuário      | ✅       | ✅       | ✅           | ✅       |  
+| Alimento     | ✅       | ✅       | ✅           | ✅       |  
+| Troca/Doação | ✅       | ✅       | ✅           | ✅       |  
 
-> Lembre-se que é necessário implementar o CRUD de pelo menos duas entidades.
+> O CRUD completo será implementado para as entidades principais: Usuário, Alimento e Troca/Doação.  
 
 ---
 
-## :neckbeard: Rotas da API REST Utilizadas
+## :neckbeard: Rotas da API REST Utilizadas  
 
-| Método HTTP | URL                | Descrição                                   |
-|-------------|--------------------|-------------------------------------------|
-| GET         | /api/livros/       | Retorna todos os livros do catálogo.       |
-| POST        | /api/reservas/     | Cria uma nova reserva.                     |
-| GET         | /api/reservas/     | Retorna todas as reservas do usuário.      |
-| DELETE      | /api/reservas/{id} | Remove uma reserva específica.             |
+| Método HTTP | URL                  | Descrição                                   |  
+|-------------|----------------------|-------------------------------------------|  
+| GET         | /api/alimentos/      | Retorna todos os alimentos disponíveis.    |  
+| POST        | /api/alimentos/      | Cadastra um novo alimento.                 |  
+| GET         | /api/trocas/         | Retorna todas as solicitações do usuário.  |  
+| POST        | /api/trocas/         | Solicita a troca ou doação de um alimento. |  
+| DELETE      | /api/trocas/{id}     | Cancela uma solicitação específica.        |  
 
 ---
