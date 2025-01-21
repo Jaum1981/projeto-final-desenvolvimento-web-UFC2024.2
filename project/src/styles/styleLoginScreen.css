@@ -1,0 +1,66 @@
+.login-container {
+    background-color: rgba(45, 106, 79, 0.39);
+    color: rgb(15, 20, 25);
+}
+
+/* Card de login/cadastro */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    background-color: rgba(45, 106, 79, 0.39);
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* botões */
+.btn-primary {
+    background-color: #f07c33;
+    border: none;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #d66f2f;
+}
+
+/* Tabs */
+.nav-tabs .nav-link.active {
+    background-color: #f07c33;
+    color: #ffffff;
+    border: none;
+}
+
+.nav-tabs .nav-link {
+    color: rgb(15, 20, 25);
+    border: none;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgba(45, 106, 79, 0.1);
+}
+
+/* Inputs */
+.form-control {
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+}
+
+.form-control:focus {
+    border-color: #f07c33;
+    box-shadow: 0 0 0 0.2rem rgba(240, 124, 51, 0.25);
+}
+
+/* Títulos */
+.card-body h1 {
+    color: #ffffff;
+    font-size: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .login-card {
+        margin: 0 16px;
+    }
+}

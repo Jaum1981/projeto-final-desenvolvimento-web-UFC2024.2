@@ -1,0 +1,131 @@
+/* Geral */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4; /* Fundo neutro */
+    color: rgb(15, 20, 25);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Cabeçalho */
+header {
+    background-color: rgba(45, 106, 79, 1); /* Verde escuro */
+    color: #ffffff;
+}
+
+header .site-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Sobre o site */
+.flex-container {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+}
+
+.about {
+    flex: 1;
+    background-color: rgba(45, 106, 79, 0.39);
+    border: 3px solid #000000;
+    border-radius: 5px;
+    padding: 16px;
+    color: #ffffff;
+}
+
+.about h1 {
+    margin-bottom: 16px;
+}
+
+aside {
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+aside .btn {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    background-color: #f07c33;
+    color: #ffffff;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+aside .btn:hover {
+    background-color: #d66f2f;
+}
+
+footer {
+    background-color: rgba(45, 106, 79);
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    border-radius: 8px 8px 0 0;
+}
+
+.card .btn {
+    background-color: #f07c33;
+    color: #ffffff;
+    border: none;
+}
+
+.card .btn:hover {
+    background-color: #d66f2f;
+}
+
+.btn-primary {
+    background-color: #f07c33;
+    border: none;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #d66f2f;
+}
+
+/* Botão Mostrar Mais */
+.btn-secondary {
+    background-color: #0fce7a;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #0c9a5a;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .flex-container {
+        flex-direction: column;
+    }
+
+    aside {
+        width: 100%;
+    }
+
+    .col-md-4 {
+        width: 100%;
+    }
+}
