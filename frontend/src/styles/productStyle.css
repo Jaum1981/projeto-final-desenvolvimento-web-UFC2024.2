@@ -1,82 +1,84 @@
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 16px;
-    background-color: rgba(45, 106, 79);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  background-color: rgba(45, 106, 79);
 }
 
 header .btn.btn-primary {
-    background-color: #f07c33;
-    border: none;
+  background-color: #f07c33;
+  border: none;
 }
 
 header span {
-    font-size: 2rem;
-    color: #0f1419;
+  font-size: 2rem;
+  color: #0f1419;
 }
 
 footer {
-    background-color: rgba(45, 106, 79);
-    color: #ffffff;
-    text-align: center;
-    padding: 10px 0;
+  background-color: rgba(45, 106, 79);
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 0;
 }
 
 .product-container {
-    background-color: rgba(45, 106, 79, 0.39);
-    color: rgb(15, 20, 25);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(45, 106, 79, 0.39);
+  color: rgb(15, 20, 25);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .product-image {
-    max-height: 400px;
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 8px;
-    object-fit: cover;
+  max-height: 400px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .product-title {
-    color: #ffffff;
-    font-size: 2rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  font-size: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.product-description, .product-location, .product-expiry {
-    color: #ffffff;
-    font-size: 1rem;
-    margin-top: 10px;
+.product-description,
+.product-location,
+.product-expiry {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-top: 10px;
 }
 
 .btn-primary {
-    background-color: #f07c33;
-    border: none;
-    color: #ffffff;
+  background-color: #f07c33;
+  border: none;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-    background-color: #d66f2f;
+  background-color: #d66f2f;
 }
 
 .btn-secondary {
-    background-color: #0fce7a;
-    border: none;
-    color: #ffffff;
+  background-color: #0fce7a;
+  border: none;
+  color: #ffffff;
 }
 
 .btn-secondary:hover {
-    background-color: #0ca664;
+  background-color: #0ca664;
 }
 
 @media (max-width: 768px) {
-    .product-container {
-        text-align: center;
-    }
+  .product-container {
+    text-align: center;
+  }
 
-    .product-image {
-        width: 100%;
-        height: auto;
-    }
+  .product-image {
+    width: 100%;
+    height: auto;
+  }
 }
