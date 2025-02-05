@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "doacaos",
+  "info": {
+    "singularName": "doacao",
+    "pluralName": "doacaos",
+    "displayName": "Doacao",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "local": {
+      "type": "string"
+    },
+    "doacao": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "doador"
+    },
+    "doacaos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::alimento.alimento",
+      "mappedBy": "alimento"
+    },
+    "solicitantes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "doacao"
+    }
+  }
+}

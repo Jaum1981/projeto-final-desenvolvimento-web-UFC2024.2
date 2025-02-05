@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "alimentos",
+  "info": {
+    "singularName": "alimento",
+    "pluralName": "alimentos",
+    "displayName": "Alimento",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "CEREAL",
+        "LATICÍNEO",
+        "LEGUME",
+        "FRUTA"
+      ],
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "expirationDate": {
+      "type": "date"
+    },
+    "imgURL": {
+      "type": "string"
+    },
+    "createdDate": {
+      "type": "date"
+    },
+    "alimento": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::doacao.doacao",
+      "inversedBy": "doacaos"
+    }
+  }
+}
