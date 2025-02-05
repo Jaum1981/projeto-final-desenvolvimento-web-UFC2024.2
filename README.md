@@ -1,38 +1,38 @@
-# :recycle: Sistema de Troca de Alimentos e Redução de Desperdício  
+# ♻️ Sistema de Doação de Alimentos e Redução de Desperdício  
 
-Uma plataforma digital para incentivar a troca e doação de alimentos excedentes na comunidade, promovendo a sustentabilidade e a solidariedade.  
+Uma plataforma digital para incentivar a doação de alimentos excedentes na comunidade, promovendo a sustentabilidade e a solidariedade.  
 
 ---
 
-## :technologist: Membros da Equipe  
+## 👨‍💻 Membros da Equipe  
 - **João Victor Amarante Diniz** - 510466  
 
 ---
 
-## :bulb: Objetivo Geral  
+## 💡 Objetivo Geral  
 Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros da comunidade por meio de uma plataforma acessível e intuitiva.  
 
 ---
 
-## :eyes: Público-Alvo  
-- Comunidades locais, pequenos comerciantes, ONGs e famílias interessadas em trocar ou doar alimentos.  
+## 👁️ Público-Alvo  
+- Comunidades locais, pequenos comerciantes, ONGs e famílias interessadas em doar alimentos.  
 
 ---
 
-## :star2: Impacto Esperado  
+## ⭐ Impacto Esperado  
 - Diminuir o desperdício de alimentos na comunidade.  
 - Incentivar a economia circular e a solidariedade.  
-- Facilitar a logística de doação e troca de alimentos entre os usuários.  
+- Facilitar a logística de doação de alimentos entre os usuários.  
 
 ---
 
-## :people_holding_hands: Papéis ou Tipos de Usuário da Aplicação  
+## 🤝 Papéis ou Tipos de Usuário da Aplicação  
 
 1. **Administrador**  
    - Gerenciamento do sistema, incluindo usuários, itens cadastrados e relatórios.  
 
 2. **Usuário Logado**  
-   - Pode cadastrar alimentos para troca/doação, buscar alimentos disponíveis e interagir com outros usuários.  
+   - Pode cadastrar alimentos para doação, buscar alimentos disponíveis e interagir com outros usuários.  
 
 3. **Usuário Não Logado**  
    - Pode apenas visualizar os alimentos disponíveis no sistema.  
@@ -41,7 +41,7 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 
 ---
 
-## :triangular_flag_on_post: Principais Funcionalidades da Aplicação  
+## 🚩 Principais Funcionalidades da Aplicação  
 
 ### Funcionalidades Acessíveis a Todos os Usuários (Inclusivas)  
 - **Consulta de Alimentos Disponíveis**  
@@ -52,10 +52,10 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 ### Funcionalidades Restritas a Usuários Logados  
 - **Cadastro de Alimentos**  
   - Inserir alimentos excedentes com descrição, fotos, prazo de validade e local de coleta.  
-- **Trocas e Doações**  
-  - Solicitar alimentos cadastrados por outros usuários e negociar trocas.  
+- **Doações**  
+  - Solicitar alimentos cadastrados por outros usuários.  
 - **Histórico de Atividades**  
-  - Acompanhar o histórico de alimentos doados, recebidos ou trocados.  
+  - Acompanhar o histórico de alimentos doados ou recebidos.  
 
 ### Funcionalidades Exclusivas do Administrador  
 - **Gerenciamento de Usuários**  
@@ -63,11 +63,11 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 - **Gerenciamento de Alimentos**  
   - Editar ou remover alimentos cadastrados que violem as políticas da plataforma.  
 - **Relatórios de Impacto**  
-  - Acompanhar estatísticas de alimentos trocados e doados.  
+  - Acompanhar estatísticas de alimentos doados.  
 
 ---
 
-## :spiral_calendar: Entidades ou Tabelas do Sistema  
+## 🗓️ Entidades ou Tabelas do Sistema  
 
 ### 1. Usuário  
 - **Atributos Principais**:  
@@ -89,9 +89,9 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
   - Prazo de Validade  
   - Status (Disponível, Reservado, Indisponível)  
 
-### 3. Troca ou Doação  
+### 3. Doação  
 - **Atributos Principais**:  
-  - ID da Troca/Doação  
+  - ID da Doação  
   - ID do Usuário (solicitante)  
   - ID do Alimento  
   - Data da Solicitação  
@@ -99,7 +99,7 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 
 ---
 
-## :desktop_computer: Tecnologias e Frameworks Utilizados  
+## 💻 Tecnologias e Frameworks Utilizados  
 
 ### **Frontend**  
 - Especifique as tecnologias, frameworks e bibliotecas utilizadas.  
@@ -107,29 +107,29 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 ### **Backend**  
 - Especifique as tecnologias, frameworks e bibliotecas utilizadas.
 
-
 ---
 
-## :shipit: Operações Implementadas para Cada Entidade da Aplicação  
+## 🛣️ Operações Implementadas para Cada Entidade da Aplicação  
 
 | Entidade     | Criação | Leitura | Atualização | Remoção |  
 |--------------|---------|---------|-------------|---------|  
-| Usuário      | ✅       | ✅       | ✅           | ✅       |  
-| Alimento     | ✅       | ✅       | ✅           | ✅       |  
-| Troca/Doação | ✅       | ✅       | ✅           | ✅       |  
+| Usuário      | ✅       | ✅       | ✅           | ✅    |  
+| Alimento     | ✅       | ✅       | ✅           | ✅    |  
+| Doação       | ✅       | ✅       | ✅           | ✅    |  
 
-> O CRUD completo será implementado para as entidades principais: Usuário, Alimento e Troca/Doação.  
+> O CRUD completo será implementado para as entidades principais: Usuário, Alimento e Doação.  
 
 ---
 
-## :neckbeard: Rotas da API REST Utilizadas  
+## 🤖 Rotas da API REST Utilizadas  
 
-| Método HTTP | URL                  | Descrição                                   |  
-|-------------|----------------------|-------------------------------------------|  
+| Método HTTP | URL                  | Descrição                                  |  
+|-------------|----------------------|--------------------------------------------|  
 | GET         | /api/alimentos/      | Retorna todos os alimentos disponíveis.    |  
 | POST        | /api/alimentos/      | Cadastra um novo alimento.                 |  
-| GET         | /api/trocas/         | Retorna todas as solicitações do usuário.  |  
-| POST        | /api/trocas/         | Solicita a troca ou doação de um alimento. |  
-| DELETE      | /api/trocas/{id}     | Cancela uma solicitação específica.        |  
+| GET         | /api/doacoes/         | Retorna todas as solicitações do usuário. |  
+| POST        | /api/doacoes/         | Solicita a doação de um alimento.         |  
+| DELETE      | /api/doacoes/{id}     | Cancela uma solicitação específica.       |  
 
 ---
+
