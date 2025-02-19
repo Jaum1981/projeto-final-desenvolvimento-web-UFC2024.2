@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema de Troca de Alimentos</title>
+    <title>Sistema de Doação de Alimentos</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -16,85 +16,100 @@
     <header class="d-flex align-items-center justify-content-between p-3">
       <div class="d-flex align-items-center">
         <img
-          src="../src/imagens/logo.png"
+          src="../src/media/logo.png"
           alt="Logo do site"
           width="50"
           height="50"
           class="me-2"
         />
-        <span class="site-name">Sistema de Troca</span>
+        <span class="site-name">Sistema de Doação</span>
       </div>
       <button type="button" class="btn btn-primary">Entrar/Cadastrar</button>
     </header>
 
-    <div class="flex-container">
-      <section class="about">
-        <h1>Sobre o Site</h1>
-        <p>
-          Aqui você encontra uma forma sustentável e solidária de compartilhar
-          alimentos com a comunidade. Doe ou troque seus excedentes com quem
-          precisa!
-        </p>
-      </section>
-
-      <aside>
-        <div class="d-grid gap-2">
-          <button class="btn btn-primary" type="button">Quero doar!</button>
-        </div>
-      </aside>
-    </div>
-
     <main>
       <div class="container">
         <h1 class="mb-4">Novidades</h1>
-        <div class="row">
-          <!-- Card 1 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img
-                src="../src/imagens/arroz.png"
-                width="249"
-                height="249"
-                class="card-img-top"
-                alt="Arroz"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Arroz</h5>
-                <p class="card-text">Isso aqui é arroz.</p>
-                <a href="#" class="btn btn-primary">Disponível</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="col-md-4 mb-4">
-            <div class="card">
-              <img
-                src="../src/imagens/feijao.jpg"
-                width="249"
-                height="249"
-                class="card-img-top"
-                alt="Feijão"
-              />
-              <div class="card-body">
-                <h5 class="card-title">Feijão</h5>
-                <p class="card-text">Isso aqui é feijão.</p>
-                <a href="#" class="btn btn-primary">Disponível</a>
-              </div>
-            </div>
-          </div>
+        <div class="row" id="produtosList">
+          <!-- Produtos serão carregados aqui -->
         </div>
 
-        <!-- Botão para carregar mais produtos -->
         <div class="text-center mt-4">
           <a href="#" class="btn btn-secondary">Mostrar mais</a>
         </div>
       </div>
     </main>
+
     <footer>
       <p>
-        &copy; 2025 Sistema de Troca de Alimentos. Todos os direitos reservados.
+        &copy; 2025 Sistema de Doação de Alimentos. Todos os direitos
+        reservados.
       </p>
     </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        carregarAlimentos();
+      });
+
+      async function carregarAlimentos() {
+        try {
+          const response = await fetch("http://localhost:1337/api/alimentos");
+          if (!response.ok) {
+            throw new Error("Erro ao carregar alimentos.");
+          }
+
+          const data = await response.json();
+
+          if (!data.data || !Array.isArray(data.data)) {
+            throw new Error("Dados inválidos recebidos da API.");
+          }
+
+          const alimentos = data.data;
+          const produtosList = document.getElementById("produtosList");
+          produtosList.innerHTML = ""; // Limpa a lista antes de renderizar
+
+          alimentos.forEach((item) => {
+            const nome = item.name || "Nome indisponível";
+            const categoria = item.category || "Sem categoria";
+            const descricao = item.description || "Sem descrição";
+            const dataExpiracao = item.expirationDate
+              ? new Date(item.expirationDate).toLocaleDateString("pt-BR")
+              : "Sem data";
+            const imagem = item.imgURL || "https://via.placeholder.com/150";
+            const documentId = item.documentId || "ID não disponível"; // Use o documentId aqui
+
+            const card = document.createElement("div");
+            card.classList.add("col-md-4", "mb-4");
+            card.setAttribute("data-id", documentId); // Usa o documentId aqui
+
+            card.innerHTML = `
+              <div class="card">
+                <img src="${imagem}" class="card-img-top" alt="${nome}">
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold; color:rgb(0, 0, 0); text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);">
+                    ${nome}</h5>
+                  <p class="card-text"><strong>Categoria:</strong> ${categoria}</p>
+                  <p class="card-text"><strong>Descrição:</strong> ${descricao}</p>
+                  <p class="card-text"><strong>Validade:</strong> ${dataExpiracao}</p>
+                </div>
+              </div>
+            `;
+
+            // Adiciona o evento de clique para carregar os detalhes
+            card.addEventListener("click", () => {
+              const produtoId = card.getAttribute("data-id");
+              window.location.href = `productScreen.html?id=${produtoId}`; // Redireciona para a página de detalhes
+            });
+
+            produtosList.appendChild(card);
+          });
+        } catch (error) {
+          console.error(error);
+          document.getElementById("produtosList").innerHTML =
+            "<p class='text-danger'>Erro ao carregar alimentos.</p>";
+        }
+      }
+    </script>
   </body>
 </html>
