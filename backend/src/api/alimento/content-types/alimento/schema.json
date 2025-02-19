@@ -22,7 +22,8 @@
         "CEREAL",
         "LATICÍNEO",
         "LEGUME",
-        "FRUTA"
+        "FRUTA",
+        "MASSAS"
       ],
       "required": true
     },

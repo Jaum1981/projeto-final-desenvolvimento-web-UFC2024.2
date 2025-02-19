@@ -383,7 +383,7 @@ export interface ApiAlimentoAlimento extends Struct.CollectionTypeSchema {
   attributes: {
     alimento: Schema.Attribute.Relation<'manyToOne', 'api::doacao.doacao'>;
     category: Schema.Attribute.Enumeration<
-      ['CEREAL', 'LATIC\u00CDNEO', 'LEGUME', 'FRUTA']
+      ['CEREAL', 'LATIC\u00CDNEO', 'LEGUME', 'FRUTA', 'MASSAS']
     > &
       Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
