@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   carregarAlimentos();
+  verificarUsuario();
 });
 
 async function carregarAlimentos() {
@@ -51,4 +52,41 @@ async function carregarAlimentos() {
     document.getElementById("produtosList").innerHTML =
       "<p class='text-danger'>Erro ao carregar alimentos.</p>";
   }
+}
+
+function verificarUsuario() {
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    atualizarHeaderUsuario(user);
+  }
+}
+
+function atualizarHeaderUsuario(user) {
+  const fotoURL = user?.userimgURL || "../src/media/avatar-de-perfil.png";
+
+  const img = document.createElement("img");
+  img.src = fotoURL;
+  img.alt = "Foto do usuário";
+  img.width = 50;
+  img.height = 50;
+  img.style.borderRadius = "50%";
+  img.style.cursor = "pointer";
+
+  img.addEventListener("click", () => {
+    window.location.href = "userScreen.html";
+  });
+
+  // Substituir o botão "Entrar/Cadastrar" peloa imagem
+  const header = document.querySelector("header");
+  const btn = header.querySelector("button");
+
+  if (btn) {
+    btn.remove();
+  }
+
+  const userContainer = document.createElement("div");
+  userContainer.appendChild(img);
+
+  header.appendChild(userContainer);
 }

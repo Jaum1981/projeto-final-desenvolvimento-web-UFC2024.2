@@ -18,7 +18,7 @@
     >
       <div class="d-flex align-items-center">
         <img
-          src="../src/imagens/logo.png"
+          src="../src/media/logo.png"
           alt="Logo do site"
           width="50"
           height="50"
@@ -31,13 +31,14 @@
     <section class="perfil-container text-center py-5">
       <div class="perfil-info">
         <img
-          src="/frontend/src/imagens/gengar.png"
+          id="userPhoto"
+          src="../src/media/avatar-de-perfil.png"
           alt="Foto do Usuário"
           class="perfil-foto rounded-circle border border-dark mb-3"
           width="120"
           height="120"
         />
-        <h2>Nome do Usuário</h2>
+        <h2 id="userName">Nome do Usuário</h2>
       </div>
     </section>
 
@@ -82,5 +83,7 @@
     <footer class="bg-dark text-white text-center py-3">
       <p>© 2024 Sistema de Doação - Todos os direitos reservados.</p>
     </footer>
+
+    <script src="../api/user.js"></script>
   </body>
 </html>
