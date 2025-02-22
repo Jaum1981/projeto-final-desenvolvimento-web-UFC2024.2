@@ -15,4 +15,20 @@ document.addEventListener("DOMContentLoaded", () => {
         user.userimgURL || "../src/media/avatar-de-perfil.png";
     }
   }
+
+  // logout
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      //confirmação
+      const confirmLogout = confirm("Deseja realmente sair?");
+      if (confirmLogout) {
+        //eemove os dados do usuário do localStorage
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("user");
+
+        window.location.href = "login-registerScreen.html";
+      }
+    });
+  }
 });

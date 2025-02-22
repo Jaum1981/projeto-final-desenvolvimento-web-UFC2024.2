@@ -1,7 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   carregarAlimentos();
   verificarUsuario();
+  configurarBotaoLogin();
 });
+
+function configurarBotaoLogin() {
+  const btnLogin = document.querySelector("header button");
+  if (btnLogin) {
+    btnLogin.addEventListener("click", () => {
+      window.location.href = "login-registerScreen.html";
+    });
+  }
+}
 
 async function carregarAlimentos() {
   try {
@@ -44,6 +54,12 @@ async function carregarAlimentos() {
                 </div>
             </div>
             `;
+
+      card.addEventListener("click", () => {
+        const produtoId = card.getAttribute("data-id");
+
+        window.location.href = `productScreen.html?id=${produtoId}`; // Redireciona para a página de detalhes
+      });
 
       produtosList.appendChild(card);
     });
