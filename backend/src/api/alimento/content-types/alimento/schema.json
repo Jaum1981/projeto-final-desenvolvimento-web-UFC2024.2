@@ -4,7 +4,8 @@
   "info": {
     "singularName": "alimento",
     "pluralName": "alimentos",
-    "displayName": "Alimento"
+    "displayName": "Alimento",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,7 +17,12 @@
     },
     "category": {
       "type": "enumeration",
-      "enum": ["CEREAL", "LATICÍNEO", "LEGUME", "FRUTA", "MASSAS"],
+      "enum": [
+        "cereal",
+        "lacticíneo",
+        "legume",
+        "fruta"
+      ],
       "required": true
     },
     "description": {
@@ -28,10 +34,14 @@
     "imgURL": {
       "type": "string"
     },
-    "status": {
+    "foodStatus": {
       "type": "enumeration",
-      "enum": ["disponivel", "indisponivel"],
-      "default": "disponivel"
+      "enum": [
+        "disponivel",
+        "indisponivel"
+      ],
+      "default": "disponivel",
+      "required": true
     },
     "doacao": {
       "type": "relation",

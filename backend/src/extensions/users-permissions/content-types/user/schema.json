@@ -3,12 +3,13 @@
   "collectionName": "up_users",
   "info": {
     "name": "user",
+    "description": "",
     "singularName": "user",
     "pluralName": "users",
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false
+    "timestamps": true
   },
   "attributes": {
     "username": {
@@ -34,6 +35,35 @@
       "configurable": false,
       "private": true,
       "searchable": false
+    },
+    "resetPasswordToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true,
+      "searchable": false
+    },
+    "confirmationToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true,
+      "searchable": false
+    },
+    "confirmed": {
+      "type": "boolean",
+      "default": false,
+      "configurable": false
+    },
+    "blocked": {
+      "type": "boolean",
+      "default": false,
+      "configurable": false
+    },
+    "role": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.role",
+      "inversedBy": "users",
+      "configurable": false
     },
     "doacao": {
       "type": "relation",

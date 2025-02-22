@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAlimentoAlimento extends Struct.CollectionTypeSchema {
   collectionName: 'alimentos';
   info: {
+    description: '';
     displayName: 'Alimento';
     pluralName: 'alimentos';
     singularName: 'alimento';
@@ -381,7 +382,7 @@ export interface ApiAlimentoAlimento extends Struct.CollectionTypeSchema {
   };
   attributes: {
     category: Schema.Attribute.Enumeration<
-      ['CEREAL', 'LATIC\u00CDNEO', 'LEGUME', 'FRUTA', 'MASSAS']
+      ['cereal', 'lactic\u00EDneo', 'legume', 'fruta']
     > &
       Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
@@ -390,6 +391,9 @@ export interface ApiAlimentoAlimento extends Struct.CollectionTypeSchema {
     description: Schema.Attribute.String;
     doacao: Schema.Attribute.Relation<'manyToOne', 'api::doacao.doacao'>;
     expirationDate: Schema.Attribute.Date;
+    foodStatus: Schema.Attribute.Enumeration<['disponivel', 'indisponivel']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'disponivel'>;
     imgURL: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -399,8 +403,6 @@ export interface ApiAlimentoAlimento extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<['disponivel', 'indisponivel']> &
-      Schema.Attribute.DefaultTo<'disponivel'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -427,6 +429,9 @@ export interface ApiDoacaoDoacao extends Struct.CollectionTypeSchema {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    donateStatus: Schema.Attribute.Enumeration<['diposnivel', 'indisponivel']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'diposnivel'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -438,8 +443,6 @@ export interface ApiDoacaoDoacao extends Struct.CollectionTypeSchema {
       'oneToMany',
       'plugin::users-permissions.user'
     >;
-    status: Schema.Attribute.Enumeration<['disponivel', 'indisponivel']> &
-      Schema.Attribute.DefaultTo<'disponivel'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -893,6 +896,7 @@ export interface PluginUsersPermissionsUser
   extends Struct.CollectionTypeSchema {
   collectionName: 'up_users';
   info: {
+    description: '';
     displayName: 'User';
     name: 'user';
     pluralName: 'users';
@@ -900,8 +904,12 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
+    timestamps: true;
   };
   attributes: {
+    blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
+    confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -924,6 +932,11 @@ export interface PluginUsersPermissionsUser
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
+    role: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.role'
+    >;
     solicitante: Schema.Attribute.Relation<'manyToOne', 'api::doacao.doacao'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

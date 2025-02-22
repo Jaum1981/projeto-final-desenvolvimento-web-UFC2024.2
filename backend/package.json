@@ -11,21 +11,21 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.9.0",
-    "@strapi/plugin-users-permissions": "5.9.0",
-    "@strapi/strapi": "5.9.0",
-    "axios": "^1.7.9",
+    "@strapi/plugin-cloud": "5.10.3",
+    "@strapi/plugin-users-permissions": "5.10.3",
+    "@strapi/strapi": "5.10.3",
     "better-sqlite3": "11.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
     "styled-components": "^6.0.0"
   },
+  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0 <=22.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "e904a092-7be4-4c48-be98-0dce6a685fc2"
+    "uuid": "8aa4582c-2e2b-4fc1-aad8-f0eceb54252d"
   }
 }
