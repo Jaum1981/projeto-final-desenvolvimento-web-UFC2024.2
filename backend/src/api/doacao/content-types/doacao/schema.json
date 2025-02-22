@@ -12,26 +12,28 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "local": {
-      "type": "string"
-    },
     "doacao": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "doador"
+      "inversedBy": "doacao"
     },
-    "doacaos": {
+    "alimentos": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::alimento.alimento",
-      "mappedBy": "alimento"
+      "mappedBy": "doacao"
     },
     "solicitantes": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "doacao"
+      "mappedBy": "solicitante"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["disponivel", "indisponivel"],
+      "default": "disponivel"
     }
   }
 }

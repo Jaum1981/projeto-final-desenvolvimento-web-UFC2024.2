@@ -4,13 +4,11 @@
   "info": {
     "singularName": "alimento",
     "pluralName": "alimentos",
-    "displayName": "Alimento",
-    "description": ""
+    "displayName": "Alimento"
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
@@ -18,13 +16,7 @@
     },
     "category": {
       "type": "enumeration",
-      "enum": [
-        "CEREAL",
-        "LATICÍNEO",
-        "LEGUME",
-        "FRUTA",
-        "MASSAS"
-      ],
+      "enum": ["CEREAL", "LATICÍNEO", "LEGUME", "FRUTA", "MASSAS"],
       "required": true
     },
     "description": {
@@ -36,14 +28,16 @@
     "imgURL": {
       "type": "string"
     },
-    "createdDate": {
-      "type": "date"
+    "status": {
+      "type": "enumeration",
+      "enum": ["disponivel", "indisponivel"],
+      "default": "disponivel"
     },
-    "alimento": {
+    "doacao": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::doacao.doacao",
-      "inversedBy": "doacaos"
+      "inversedBy": "alimentos"
     }
   }
 }
