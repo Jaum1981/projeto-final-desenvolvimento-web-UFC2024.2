@@ -42,6 +42,9 @@ async function carregarAlimentos() {
       const card = document.createElement("div");
       card.classList.add("col-md-4", "mb-4");
 
+      // Atribuindo o data-id com o id do produto
+      card.setAttribute("data-id", item.documentId);
+
       card.innerHTML = `
             <div class="card">
                 <img src="${imagem}" class="card-img-top" alt="${nome}">
@@ -56,7 +59,7 @@ async function carregarAlimentos() {
             `;
 
       card.addEventListener("click", () => {
-        const produtoId = card.getAttribute("data-id");
+        const produtoId = card.getAttribute("data-id"); // Agora conseguimos pegar o id do produto
 
         window.location.href = `productScreen.html?id=${produtoId}`; // Redireciona para a página de detalhes
       });
