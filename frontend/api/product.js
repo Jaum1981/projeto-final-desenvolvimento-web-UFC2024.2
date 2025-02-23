@@ -55,8 +55,16 @@ async function carregarProduto(documentId) {
   }
 }
 
-function atualizarHeaderUsuario(user) {
+// Função para atualizar o header com o avatar do usuário (se logado)
+async function atualizarHeaderUsuario() {
+  // Se não houver token, não há usuário para atualizar
+  const token = localStorage.getItem("jwt");
+  if (!token) return;
+
+  // Busque os dados do usuário armazenados no localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
   const fotoURL = user?.userimgURL || "../src/media/avatar-de-perfil.png";
+
   const img = document.createElement("img");
   img.src = fotoURL;
   img.alt = "Foto do usuário";
@@ -67,6 +75,7 @@ function atualizarHeaderUsuario(user) {
   img.addEventListener("click", () => {
     window.location.href = "userScreen.html";
   });
+
   // Remove o botão de login e insere o avatar
   const header = document.querySelector("header");
   const btn = document.getElementById("loginBtn");
@@ -74,4 +83,71 @@ function atualizarHeaderUsuario(user) {
     btn.remove();
   }
   header.appendChild(img);
+}
+
+// Verifica se o usuário está logado para ajustar a exibição dos botões
+async function verificarUsuario() {
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    // Caso queira, você pode ocultar o botão de solicitar se o usuário logado não for para essa ação
+    // Exemplo: document.getElementById("solicitar-btn").style.display = "none";
+    // Porém, normalmente o usuário logado pode solicitar doação
+    // Se necessário, ajuste essa lógica conforme seu fluxo de negócios.
+  }
+}
+
+// Função para solicitar a doação do produto
+async function solicitarDoacao(produto) {
+  const token = localStorage.getItem("jwt");
+
+  // Se o usuário não estiver logado, redireciona para a página de login
+  if (!token) {
+    alert("Você precisa estar logado para solicitar uma doação!");
+    window.location.href = "login-registerScreen.html";
+    return;
+  }
+
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?.id;
+
+    if (!userId) {
+      throw new Error("Erro ao obter informações do usuário.");
+    }
+
+    // Corpo da requisição para criar uma solicitação de doação.
+    // Ajuste os campos conforme o seu schema e lógica de backend.
+    const requestBody = {
+      data: {
+        donateStatus: "indisponivel", // Exemplo de status, ajuste se necessário
+        alimentos: [produto.id], // Relacionamento com o alimento solicitado
+        solicitacoes: { id: userId }, // Relacionamento com o usuário solicitante
+      },
+    };
+
+    const response = await fetch("http://localhost:1337/api/doacaos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Solicitação de doação realizada com sucesso:", data);
+      alert("Solicitação de doação realizada com sucesso!");
+    } else {
+      console.error(
+        "Erro ao realizar a solicitação de doação:",
+        data.error.message
+      );
+      alert("Erro ao realizar a solicitação de doação.");
+    }
+  } catch (error) {
+    console.error("Erro ao processar a solicitação de doação:", error);
+    alert("Erro ao processar a solicitação de doação.");
+  }
 }
