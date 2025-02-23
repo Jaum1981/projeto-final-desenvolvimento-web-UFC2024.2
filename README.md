@@ -113,9 +113,9 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 
 | Entidade     | Criação | Leitura | Atualização | Remoção |  
 |--------------|---------|---------|-------------|---------|  
-| Usuário      | ✅       | ✅       | ✅           | ✅    |  
-| Alimento     | ✅       | ✅       | ✅           | ✅    |  
-| Doação       | ✅       | ✅       | ✅           | ✅    |  
+| Usuário      | ✅       | ✅       |            |         |  
+| Alimento     | ✅       | ✅       |            |         |  
+| Doação       | ✅       | ✅       |            |         |  
 
 > O CRUD completo será implementado para as entidades principais: Usuário, Alimento e Doação.  
 
@@ -123,13 +123,13 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 
 ## 🤖 Rotas da API REST Utilizadas  
 
-| Método HTTP | URL                  | Descrição                                  |  
-|-------------|----------------------|--------------------------------------------|  
-| GET         | /api/alimentos/      | Retorna todos os alimentos disponíveis.    |  
-| POST        | /api/alimentos/      | Cadastra um novo alimento.                 |  
+| Método HTTP | URL                   | Descrição                                  |  
+|-------------|-----------------------|--------------------------------------------|  
+| GET         | /api/alimentos/       | Retorna todos os alimentos disponíveis.    |  
+| POST        | /api/alimentos/       | Cadastra um novo alimento.                 |  
 | GET         | /api/doacoes/         | Retorna todas as solicitações do usuário. |  
 | POST        | /api/doacoes/         | Solicita a doação de um alimento.         |  
-| DELETE      | /api/doacoes/{id}     | Cancela uma solicitação específica.       |  
+| GET         | /api/user/{id}        | retorna o user especifico                 |  
 
 ---
 
