@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   } else {
     console.error("ID do produto não encontrado na URL.");
   }
+
+  await atualizarHeaderUsuario();
+  await verificarUsuario();
 });
 
 async function carregarProduto(documentId) {
@@ -52,55 +55,23 @@ async function carregarProduto(documentId) {
   }
 }
 
-async function solicitarDoacao(produto) {
-  const token = localStorage.getItem("jwt");
-
-  if (!token) {
-    alert("Você precisa estar logado para solicitar uma doação!");
-    window.location.href = "login-registerScreen.html";
-    return;
+function atualizarHeaderUsuario(user) {
+  const fotoURL = user?.userimgURL || "../src/media/avatar-de-perfil.png";
+  const img = document.createElement("img");
+  img.src = fotoURL;
+  img.alt = "Foto do usuário";
+  img.width = 50;
+  img.height = 50;
+  img.style.borderRadius = "50%";
+  img.style.cursor = "pointer";
+  img.addEventListener("click", () => {
+    window.location.href = "userScreen.html";
+  });
+  // Remove o botão de login e insere o avatar
+  const header = document.querySelector("header");
+  const btn = document.getElementById("loginBtn");
+  if (btn) {
+    btn.remove();
   }
-
-  try {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const userId = user?.id;
-
-    if (!userId) {
-      throw new Error("Erro ao obter informações do usuário.");
-    }
-
-    const requestBody = {
-      data: {
-        donateStatus: "indisponivel", // O status da doação
-        alimentos: [produto.id], // Relacionamento com o alimento
-        doacao: { id: userId }, // Relacionamento com o usuário (doação) agora com o formato correto
-        solicitacoes: { id: userId }, // Relacionamento com o solicitante
-      },
-    };
-
-    const response = await fetch("http://localhost:1337/api/doacaos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      console.log("Solicitação de doação realizada com sucesso:", data);
-      alert("Solicitação de doação realizada com sucesso!");
-    } else {
-      console.error(
-        "Erro ao realizar a solicitação de doação:",
-        data.error.message
-      );
-      alert("Erro ao realizar a solicitação de doação.");
-    }
-  } catch (error) {
-    console.error("Erro ao processar a solicitação de doação:", error);
-    alert("Erro ao processar a solicitação de doação.");
-  }
+  header.appendChild(img);
 }
