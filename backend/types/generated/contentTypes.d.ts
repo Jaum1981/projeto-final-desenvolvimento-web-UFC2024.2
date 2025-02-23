@@ -429,9 +429,7 @@ export interface ApiDoacaoDoacao extends Struct.CollectionTypeSchema {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    donateStatus: Schema.Attribute.Enumeration<['diposnivel', 'indisponivel']> &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'diposnivel'>;
+    donateStatus: Schema.Attribute.Enumeration<['disponivel', 'indisponivel']>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -439,8 +437,8 @@ export interface ApiDoacaoDoacao extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    solicitantes: Schema.Attribute.Relation<
-      'oneToMany',
+    solicitacoes: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
     updatedAt: Schema.Attribute.DateTime;
@@ -914,6 +912,7 @@ export interface PluginUsersPermissionsUser
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     doacao: Schema.Attribute.Relation<'oneToOne', 'api::doacao.doacao'>;
+    doacaos: Schema.Attribute.Relation<'oneToMany', 'api::doacao.doacao'>;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -937,7 +936,6 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    solicitante: Schema.Attribute.Relation<'manyToOne', 'api::doacao.doacao'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

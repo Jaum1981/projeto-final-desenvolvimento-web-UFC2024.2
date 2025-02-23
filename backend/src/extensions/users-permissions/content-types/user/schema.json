@@ -71,11 +71,11 @@
       "target": "api::doacao.doacao",
       "mappedBy": "doacao"
     },
-    "solicitante": {
+    "doacaos": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToMany",
       "target": "api::doacao.doacao",
-      "inversedBy": "solicitantes"
+      "mappedBy": "solicitacoes"
     }
   }
 }

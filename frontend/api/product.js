@@ -44,11 +44,63 @@ async function carregarProduto(documentId) {
 
     const btnSolicitar = document.getElementById("solicitar-btn");
     btnSolicitar.addEventListener("click", () => {
-      // Lógica para solicitar a doação
-      alert(`Você solicitou a doação do produto ${produto.name}.`);
+      solicitarDoacao(produto);
     });
   } catch (error) {
     console.error(error);
     alert("Erro ao carregar o produto.");
+  }
+}
+
+async function solicitarDoacao(produto) {
+  const token = localStorage.getItem("jwt");
+
+  if (!token) {
+    alert("Você precisa estar logado para solicitar uma doação!");
+    window.location.href = "login-registerScreen.html";
+    return;
+  }
+
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?.id;
+
+    if (!userId) {
+      throw new Error("Erro ao obter informações do usuário.");
+    }
+
+    const requestBody = {
+      data: {
+        donateStatus: "indisponivel", // O status da doação
+        alimentos: [produto.id], // Relacionamento com o alimento
+        doacao: { id: userId }, // Relacionamento com o usuário (doação) agora com o formato correto
+        solicitacoes: { id: userId }, // Relacionamento com o solicitante
+      },
+    };
+
+    const response = await fetch("http://localhost:1337/api/doacaos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Solicitação de doação realizada com sucesso:", data);
+      alert("Solicitação de doação realizada com sucesso!");
+    } else {
+      console.error(
+        "Erro ao realizar a solicitação de doação:",
+        data.error.message
+      );
+      alert("Erro ao realizar a solicitação de doação.");
+    }
+  } catch (error) {
+    console.error("Erro ao processar a solicitação de doação:", error);
+    alert("Erro ao processar a solicitação de doação.");
   }
 }

@@ -11,15 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "donateStatus": {
-      "type": "enumeration",
-      "enum": [
-        "diposnivel",
-        "indisponivel"
-      ],
-      "default": "diposnivel",
-      "required": true
-    },
     "alimentos": {
       "type": "relation",
       "relation": "oneToMany",
@@ -32,11 +23,18 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "doacao"
     },
-    "solicitantes": {
+    "solicitacoes": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "solicitante"
+      "inversedBy": "doacaos"
+    },
+    "donateStatus": {
+      "type": "enumeration",
+      "enum": [
+        "disponivel",
+        "indisponivel"
+      ]
     }
   }
 }
