@@ -3,119 +3,115 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (userData) {
     const user = JSON.parse(userData);
-
     const userNameElement = document.getElementById("userName");
-    if (userNameElement && user.username) {
-      userNameElement.textContent = user.username;
-    }
-
     const userPhotoElement = document.getElementById("userPhoto");
+
+    if (userNameElement) userNameElement.textContent = user.username;
     if (userPhotoElement) {
       userPhotoElement.src =
         user.userimgURL || "../src/media/avatar-de-perfil.png";
     }
 
-    const userDocumentId = user.documentId; // Pega o documentId do usuário logado
-
+    const userDocumentId = user.documentId;
     if (!userDocumentId) {
       console.error("Erro: documentId do usuário não encontrado.");
       return;
     }
 
-    // Busca as doações do usuário logado que ainda estão disponíveis
-    async function fetchDoacoesUsuario() {
+    async function fetchDoacoesCriadas() {
       try {
-        const responseDoacoes = await fetch(
-          "http://localhost:1337/api/doacaos",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-            },
+        const userData = localStorage.getItem("user");
+
+        if (userData) {
+          const user = JSON.parse(userData);
+          const userId = user.id;
+
+          const responseDoacoes = await fetch(
+            `http://localhost:1337/api/doacaos?populate[criador]=true&populate[alimentos]=true&populate[solicitacoes]=true`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+              },
+            }
+          );
+
+          const dataDoacoes = await responseDoacoes.json();
+          const doacoesCriadas = dataDoacoes?.data || [];
+          const doacoesCriadasElement =
+            document.getElementById("doacoesCriadas");
+
+          if (doacoesCriadas.length === 0) {
+            doacoesCriadasElement.innerHTML =
+              "<p class='text-center'>Você não criou nenhuma doação ainda.</p>";
+            return;
           }
-        );
 
-        if (!responseDoacoes.ok) {
-          throw new Error("Erro ao buscar doações");
-        }
+          // Cria a lista de doações
+          const doacoesCriadasList = document.createElement("ul");
+          doacoesCriadasList.classList.add("list-group");
 
-        const dataDoacoes = await responseDoacoes.json();
+          // Processa cada doação
+          for (const doacao of doacoesCriadas) {
+            const alimentos = doacao.alimentos || [];
+            const criador = doacao.criador || {};
+            const solicitacoes = doacao.solicitacoes || [];
 
-        // Filtra as doações do usuário logado que estão disponíveis
-        const doacoesUsuario = dataDoacoes.data.filter(
-          (doacao) =>
-            doacao.attributes.documentId === userDocumentId &&
-            doacao.attributes.donateStatus === "disponivel"
-        );
+            console.log("Doação:", doacao);
 
-        if (doacoesUsuario.length === 0) {
-          document.querySelector(".produtos-container .row").innerHTML =
-            "<p class='text-center'>Você não tem nenhuma doação disponível no momento.</p>";
-          return;
-        }
+            // Cria o item de lista para a doação
+            const listItem = document.createElement("li");
+            listItem.className = "bg-info text-white p-3 mb-2 rounded";
 
-        // Busca os alimentos
-        const responseAlimentos = await fetch(
-          "http://localhost:1337/api/alimentos",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-            },
+            let alimentoInfo = alimentos
+              .map(
+                (alimento) => `
+                <p><strong>Alimento:</strong> ${alimento.name} (${alimento.category})</p>
+                <p><strong>Descrição:</strong> ${alimento.description}</p>
+                <p><strong>Data de Validade:</strong> ${alimento.expirationDate}</p>
+                <p><img src="${alimento.imgURL}" alt="${alimento.name}" width="100" /></p>
+                <p><strong>Status do Alimento:</strong> ${alimento.foodStatus}</p>`
+              )
+              .join("");
+
+            let criadorInfo = criador.username
+              ? `
+              <p><strong>Criador:</strong> ${criador.username}</p>
+            `
+              : "<p><strong>Criador:</strong> Não disponível</p>";
+
+            let solicitacaoInfo = solicitacoes
+              .map(
+                (solicitacao) => `
+                <p><strong>Solicitante:</strong> ${solicitacao.username} </p>`
+              )
+              .join("");
+
+            listItem.innerHTML = `
+              <p><strong>Status da Doação:</strong> ${doacao.donateStatus}</p>
+              ${alimentoInfo}
+              ${criadorInfo}
+              ${solicitacaoInfo}
+              <p><strong>Data da Doação:</strong> ${new Date(
+                doacao.createdAt
+              ).toLocaleDateString()}</p>
+            `;
+
+            doacoesCriadasElement.appendChild(listItem);
           }
-        );
-
-        if (!responseAlimentos.ok) {
-          throw new Error("Erro ao buscar alimentos");
         }
-
-        const dataAlimentos = await responseAlimentos.json();
-
-        // Filtra os alimentos que pertencem às doações do usuário logado
-        const alimentosUsuario = dataAlimentos.data.filter((alimento) =>
-          doacoesUsuario.some(
-            (doacao) =>
-              doacao.attributes.documentId === alimento.attributes.documentId
-          )
-        );
-
-        // Exibir os alimentos na tela
-        const container = document.querySelector(".produtos-container .row");
-        container.innerHTML = "";
-
-        alimentosUsuario.forEach((alimento) => {
-          const card = document.createElement("div");
-          card.className = "col";
-
-          card.innerHTML = `
-            <div class="card">
-              <img src="${alimento.attributes.imgURL}" alt="${
-            alimento.attributes.name
-          }" class="card-img-top" />
-              <div class="card-body text-center">
-                <h3 class="card-title">${alimento.attributes.name}</h3>
-                <p class="card-text">${
-                  alimento.attributes.description || "Sem descrição disponível."
-                }</p>
-                <button class="btn btn-primary">Detalhes</button>
-              </div>
-            </div>
-          `;
-
-          container.appendChild(card);
-        });
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao buscar doações:", error);
       }
     }
 
-    fetchDoacoesUsuario();
+    fetchDoacoesCriadas();
   }
 
   // Logout
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
-      const confirmLogout = confirm("Deseja realmente sair?");
-      if (confirmLogout) {
+      if (confirm("Deseja realmente sair?")) {
         localStorage.removeItem("jwt");
         localStorage.removeItem("user");
         window.location.href = "login-registerScreen.html";

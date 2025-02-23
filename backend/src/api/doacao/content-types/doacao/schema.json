@@ -17,24 +17,24 @@
       "target": "api::alimento.alimento",
       "mappedBy": "doacao"
     },
-    "doacao": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "doacao"
-    },
-    "solicitacoes": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "doacaos"
-    },
     "donateStatus": {
       "type": "enumeration",
       "enum": [
         "disponivel",
         "indisponivel"
       ]
+    },
+    "criador": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "doacaos"
+    },
+    "solicitacoes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "doacao"
     }
   }
 }

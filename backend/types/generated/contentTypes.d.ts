@@ -425,8 +425,8 @@ export interface ApiDoacaoDoacao extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    doacao: Schema.Attribute.Relation<
-      'oneToOne',
+    criador: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
     donateStatus: Schema.Attribute.Enumeration<['disponivel', 'indisponivel']>;
@@ -438,7 +438,7 @@ export interface ApiDoacaoDoacao extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     solicitacoes: Schema.Attribute.Relation<
-      'manyToOne',
+      'oneToMany',
       'plugin::users-permissions.user'
     >;
     updatedAt: Schema.Attribute.DateTime;
@@ -902,7 +902,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -911,7 +910,7 @@ export interface PluginUsersPermissionsUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    doacao: Schema.Attribute.Relation<'oneToOne', 'api::doacao.doacao'>;
+    doacao: Schema.Attribute.Relation<'manyToOne', 'api::doacao.doacao'>;
     doacaos: Schema.Attribute.Relation<'oneToMany', 'api::doacao.doacao'>;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &

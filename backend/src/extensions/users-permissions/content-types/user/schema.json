@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -67,15 +67,15 @@
     },
     "doacao": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::doacao.doacao",
-      "mappedBy": "doacao"
+      "inversedBy": "solicitacoes"
     },
     "doacaos": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::doacao.doacao",
-      "mappedBy": "solicitacoes"
+      "mappedBy": "criador"
     }
   }
 }
