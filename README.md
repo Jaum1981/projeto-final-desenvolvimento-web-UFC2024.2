@@ -72,30 +72,34 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 ### 1. Usuário  
 - **Atributos Principais**:  
   - ID do Usuário  
-  - Nome  
+  - Nome de Usuário  
   - Email  
   - Senha  
   - Tipo (Administrador ou Usuário Comum)  
   - Data de Registro  
+  - Status (Confirmado/Bloqueado)  
+  - Papel (Relação com permissões)  
+  - Doações Criadas  
+  - Solicitações de Doação  
 
-### 2. Alimento  
+### 2. Doação  
+- **Atributos Principais**:  
+  - ID da Doação  
+  - Alimentos (Relacionados)  
+  - Status da Doação (Disponível/Indisponível)  
+  - Criador (Usuário)  
+  - Solicitações de Doação  
+
+### 3. Alimento  
 - **Atributos Principais**:  
   - ID do Alimento  
   - Nome  
+  - Categoria (Cereal, Laticínio, Legume, Fruta)  
   - Descrição  
-  - Tipo (ex.: Frutas, Vegetais, Cereais)  
-  - Foto  
-  - Localização  
-  - Prazo de Validade  
-  - Status (Disponível, Reservado, Indisponível)  
-
-### 3. Doação  
-- **Atributos Principais**:  
-  - ID da Doação  
-  - ID do Usuário (solicitante)  
-  - ID do Alimento  
-  - Data da Solicitação  
-  - Status (Pendente, Concluída, Cancelada)  
+  - Data de Validade  
+  - URL da Imagem  
+  - Status do Alimento (Disponível/Indisponível)  
+  - Doação Relacionada  
 
 ---
 
@@ -105,7 +109,7 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 - Especifique as tecnologias, frameworks e bibliotecas utilizadas.  
 
 ### **Backend**  
-- Especifique as tecnologias, frameworks e bibliotecas utilizadas.
+- Especifique as tecnologias, frameworks e bibliotecas utilizadas.  
 
 ---
 
@@ -113,23 +117,28 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 
 | Entidade     | Criação | Leitura | Atualização | Remoção |  
 |--------------|---------|---------|-------------|---------|  
-| Usuário      | ✅       | ✅       |            |         |  
-| Alimento     | ✅       | ✅       |            |         |  
-| Doação       | ✅       | ✅       |            |         |  
+| Usuário      | ✅       | ✅       | ✅           | ✅       |  
+| Alimento     | ✅       | ✅       | ✅           | ✅       |  
+| Doação       | ✅       | ✅       | ✅           | ✅       |  
 
 > O CRUD completo será implementado para as entidades principais: Usuário, Alimento e Doação.  
+
 
 ---
 
 ## 🤖 Rotas da API REST Utilizadas  
 
-| Método HTTP | URL                   | Descrição                                  |  
-|-------------|-----------------------|--------------------------------------------|  
-| GET         | /api/alimentos/       | Retorna todos os alimentos disponíveis.    |  
-| POST        | /api/alimentos/       | Cadastra um novo alimento.                 |  
-| GET         | /api/doacoes/         | Retorna todas as solicitações do usuário. |  
-| POST        | /api/doacoes/         | Solicita a doação de um alimento.         |  
-| GET         | /api/user/{id}        | retorna o user especifico                 |  
+| Método HTTP | URL                                         | Descrição                                  |  
+|-------------|---------------------------------|--------------------------------------------|  
+| GET        | /api/alimentos/                | Retorna todos os alimentos disponíveis.    |  
+| POST       | /api/alimentos/                | Cadastra um novo alimento.                 |  
+| GET        | /api/doacoes/                  | Retorna todas as solicitações do usuário.  |  
+| POST       | /api/doacoes/                  | Solicita a doação de um alimento.          |  
+| GET        | /api/user/{id}                 | Retorna um usuário específico.             |  
+| POST       | /api/user/                     | Cadastra um novo usuário.                  |  
+| GET        | /api/doacaos?populate=criador&populate=alimentos&populate=solicitacoes | Retorna doações com dados relacionados. |  
+| GET        | /api/users/1?populate=role     | Retorna o usuário com sua função.           |  
 
 ---
+
 
