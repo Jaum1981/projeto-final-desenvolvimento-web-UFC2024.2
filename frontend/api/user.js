@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Tipo de role do usuário:", user.role?.type);
 
     // Função para abrir modal de exclusão de usuários
+    let userIdSelecionado = null;
+
     document
       .getElementById("deleteUsersBtn")
       ?.addEventListener("click", async () => {
@@ -36,13 +38,21 @@ document.addEventListener("DOMContentLoaded", async () => {
           const response = await fetch("http://localhost:1337/api/users", {
             headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
           });
+
           const users = await response.json();
 
-          document.getElementById("confirmDeleteModal").innerHTML = users
+          //Popula
+          const userSelect = document.getElementById("userSelect");
+          userSelect.innerHTML = users
             .map(
               (user) => `<option value="${user.id}">${user.username}</option>`
             )
             .join("");
+
+          // primeiro user aparace como padrão
+          userIdSelecionado = users.length > 0 ? users[0].id : null;
+
+          // Exibe o modal de exclusão
           new bootstrap.Modal(
             document.getElementById("deleteUserModal")
           ).show();
@@ -51,23 +61,83 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       });
 
+    // Captura o usuário selecionado
+    document
+      .getElementById("userSelect")
+      ?.addEventListener("change", (event) => {
+        userIdSelecionado = event.target.value;
+      });
+
     // Confirmação e exclusão de usuários
     document
       .getElementById("confirmDeleteUserBtn")
       ?.addEventListener("click", async () => {
-        const userId = document.getElementById("userSelect").value;
-        if (confirm("Tem certeza que deseja excluir este usuário?")) {
+        if (!userIdSelecionado) {
+          console.error("Nenhum usuário selecionado!");
+          return;
+        }
+
+        if (
+          confirm(
+            "Tem certeza que deseja excluir este usuário e seus alimentos?"
+          )
+        ) {
           try {
-            await fetch(`http://localhost:1337/api/users/${userId}`, {
-              method: "DELETE",
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-              },
-            });
-            alert("Usuário excluído com sucesso.");
+            //Buscar os detalhes do usuário incluindo os alimentos
+            const userResponse = await fetch(
+              `http://localhost:1337/api/users/${userIdSelecionado}?populate=doacao&populate=doacaos`,
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+              }
+            );
+
+            const userData = await userResponse.json();
+            console.log("Usuário a ser excluído:", userData);
+
+            // pega os alimentos do usuário
+            const alimentosDoUsuario = [];
+
+            if (userData.doacao) {
+              alimentosDoUsuario.push(userData.doacao);
+            }
+
+            if (userData.doacaos && Array.isArray(userData.doacaos)) {
+              alimentosDoUsuario.push(...userData.doacaos);
+            }
+
+            console.log("Alimentos a serem excluídos:", alimentosDoUsuario);
+
+            // eexcluir todos os alimentos do usuário
+            for (const alimento of alimentosDoUsuario) {
+              console.log(`Excluindo alimento: ${alimento.documentId}`);
+              await fetch(
+                `http://localhost:1337/api/alimentos/${alimento.documentId}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                  },
+                }
+              );
+            }
+
+            //excluir o usuário
+            await fetch(
+              `http://localhost:1337/api/users/${userIdSelecionado}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+              }
+            );
+
+            alert("Usuário e seus alimentos foram excluídos com sucesso.");
             window.location.reload();
           } catch (error) {
-            console.error("Erro ao excluir usuário:", error);
+            console.error("Erro ao excluir usuário e seus alimentos:", error);
           }
         }
       });
