@@ -63,11 +63,10 @@ async function carregarProduto(documentId) {
 
 // Função para atualizar o header com o avatar do usuário (se logado)
 async function atualizarHeaderUsuario() {
-  // Se não houver token, não há usuário para atualizar
   const token = localStorage.getItem("jwt");
   if (!token) return;
 
-  // Busque os dados do usuário armazenados no localStorage
+  //dados do usuário armazenados no localStorage
   const user = JSON.parse(localStorage.getItem("user"));
   const fotoURL = user?.userimgURL || "../src/media/avatar-de-perfil.png";
 

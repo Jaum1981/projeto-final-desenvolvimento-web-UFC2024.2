@@ -112,7 +112,6 @@ document
   .addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Obtém os valores do formulário
     const nome = document.getElementById("alimentoNome").value;
     const categoria = document.getElementById("alimentoCategoria").value;
     const descricao = document.getElementById("alimentoDescricao").value;
@@ -120,7 +119,7 @@ document
     const imgURL = document.getElementById("imgURL").value;
 
     const token = localStorage.getItem("jwt");
-    const user = JSON.parse(localStorage.getItem("user")); // Dados do usuário logado
+    const user = JSON.parse(localStorage.getItem("user"));
 
     try {
       // Cria a doação vinculando o usuário como criador
@@ -132,7 +131,7 @@ document
         },
         body: JSON.stringify({
           data: {
-            criador: user.id, // Usa o id do usuário logado
+            criador: user.id,
             donateStatus: "disponivel",
           },
         }),
@@ -143,9 +142,9 @@ document
       }
 
       const doacaoResult = await doacaoResponse.json();
-      const doacaoId = doacaoResult.data.id; // ID da doação recém-criada
+      const doacaoId = doacaoResult.data.id; //id da doação recém-criada
 
-      // Cria o alimento relacionando-o à doação
+      //cria o alimento e faz a relação a doação
       const alimentoData = {
         name: nome,
         category: categoria,
@@ -153,7 +152,7 @@ document
         expirationDate: dataExpiracao,
         imgURL: imgURL,
         foodStatus: "disponivel",
-        doacao: doacaoId, // Relação com a doação que contém o criador
+        doacao: doacaoId, //relação com a doação
       };
 
       const alimentoResponse = await fetch(

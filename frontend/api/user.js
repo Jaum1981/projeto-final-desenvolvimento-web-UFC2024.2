@@ -61,14 +61,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       });
 
-    // Captura o usuário selecionado
+    //Captura o usuário
     document
       .getElementById("userSelect")
       ?.addEventListener("change", (event) => {
         userIdSelecionado = event.target.value;
       });
 
-    // Confirmação e exclusão de usuários
+    //Confirmação e exclusão
     document
       .getElementById("confirmDeleteUserBtn")
       ?.addEventListener("click", async () => {
