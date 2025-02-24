@@ -44,7 +44,7 @@ async function carregarProduto(documentId) {
       produto.description || "Descrição não disponível";
     document.getElementById(
       "product-location"
-    ).innerHTML = `Local de Coleta: <strong>${produto.category}</strong>`;
+    ).innerHTML = `Tipo: <strong>${produto.category}</strong>`;
     document.getElementById(
       "product-expiry"
     ).innerHTML = `Validade: <strong>${new Date(

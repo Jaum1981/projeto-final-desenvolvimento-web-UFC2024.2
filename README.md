@@ -52,14 +52,14 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 ### Funcionalidades Acessíveis a Todos os Usuários (Inclusivas)
 
 - **Consulta de Alimentos Disponíveis**
-  - Busca por alimentos cadastrados com base na localização, tipo e prazo de validade.
+  - Busca por alimentos cadastrados.
 - **Visualização de Detalhes**
   - Exibição das informações de cada alimento, como descrição, local de coleta e disponibilidade.
 
 ### Funcionalidades Restritas a Usuários Logados
 
 - **Cadastro de Alimentos**
-  - Inserir alimentos excedentes com descrição, fotos, prazo de validade e local de coleta.
+  - Inserir alimentos excedentes com descrição, fotos, prazo de validade.
 - **Doações**
   - Solicitar alimentos cadastrados por outros usuários.
 - **Histórico de Atividades**
@@ -68,11 +68,9 @@ Reduzir o desperdício de alimentos e fomentar a colaboração entre os membros 
 ### Funcionalidades Exclusivas do Administrador
 
 - **Gerenciamento de Usuários**
-  - Monitorar e editar contas de usuários, incluindo permissões e atividades suspeitas.
+  - Monitorar e excluir contas de usuários.
 - **Gerenciamento de Alimentos**
-  - Editar ou remover alimentos cadastrados que violem as políticas da plataforma.
-- **Relatórios de Impacto**
-  - Acompanhar estatísticas de alimentos doados.
+  - Remover alimentos cadastrados que violem as políticas da plataforma.
 
 ---
 
