@@ -12,6 +12,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   //await verificarUsuario();
 });
 
+//botão de login
+const loginBtn = document.getElementById("loginBtn");
+loginBtn.addEventListener("click", () => {
+  window.location.href = "login-registerScreen.html";
+});
+
 async function carregarProduto(documentId) {
   try {
     const response = await fetch(
