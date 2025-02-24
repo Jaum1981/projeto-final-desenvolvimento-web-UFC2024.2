@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   await atualizarHeaderUsuario();
-  await verificarUsuario();
+  //await verificarUsuario();
 });
 
 async function carregarProduto(documentId) {
