@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           });
 
           const responseData = await response.json();
-          console.log("Resposta da API /api/alimentos:", responseData);
+          //console.log("Resposta da API /api/alimentos:", responseData);
 
           const alimentos = responseData?.data || [];
 
