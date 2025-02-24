@@ -237,6 +237,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           );
 
           const dataDoacoes = await responseDoacoes.json();
+          console.log("Resposta da API:", dataDoacoes);
+
           const doacoesCriadas = dataDoacoes?.data || [];
           const doacoesCriadasElement =
             document.getElementById("doacoesCriadas");
