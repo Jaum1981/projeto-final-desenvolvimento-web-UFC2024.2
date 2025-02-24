@@ -141,6 +141,16 @@ footer p {
   border-radius: 5px;
 }
 
+btn btn-secondary mt-3 {
+  background-color: #0fce7a; /* Botão verde */
+  color: #ffffff;
+  border: none;
+  font-weight: bold;
+  padding: 10px;
+  width: 100%;
+  border-radius: 15px;
+}
+
 .btn-primary:hover {
   background-color: #d66f2f; /* Hover laranja mais escuro */
 }
@@ -171,3 +181,8 @@ footer p {
     width: 100%;
   }
 }
+
+/* .btn {
+  min-width: 50px;
+  padding: 10px 20px;
+} */

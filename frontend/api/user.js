@@ -18,15 +18,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const isAdmin = user.role?.type === "admin"; // Corrigido aqui
+    const isAdmin = user.role?.type === "admin";
     if (isAdmin) {
       document.getElementById("deleteUsersBtn").style.display = "inline-block";
       document.getElementById("deleteDoacoesBtn").style.display =
         "inline-block";
     }
 
-    console.log("Role do usuário:", user.role); // Verifique o objeto role
-    console.log("Tipo de role do usuário:", user.role?.type); // Verifique o tipo de roleistrador
+    console.log("Role do usuário:", user.role);
+    console.log("Tipo de role do usuário:", user.role?.type);
 
     // Função para abrir modal de exclusão de usuários
     document
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           });
           const users = await response.json();
 
-          document.getElementById("userSelect").innerHTML = users
+          document.getElementById("confirmDeleteModal").innerHTML = users
             .map(
               (user) => `<option value="${user.id}">${user.username}</option>`
             )
@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       });
 
+    let alimentoIdSelecionado = null;
+
     // Função para abrir modal de exclusão de alimentos
     document
       .getElementById("deleteDoacoesBtn")
@@ -80,40 +82,70 @@ document.addEventListener("DOMContentLoaded", async () => {
           const response = await fetch("http://localhost:1337/api/alimentos", {
             headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
           });
-          const alimentos = await response.json();
 
-          document.getElementById("alimentoSelect").innerHTML = alimentos
+          const responseData = await response.json();
+          console.log("Resposta da API /api/alimentos:", responseData);
+
+          const alimentos = responseData?.data || [];
+
+          const alimentosLista = alimentos
             .map(
-              (alimento) =>
-                `<option value="${alimento.id}">${alimento.name}</option>`
+              (alimento) => `
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>${alimento.name}</span>
+                <button class="btn btn-danger btn-sm delete-btn" data-document-id="${alimento.documentId}">
+                  Excluir
+                </button>
+              </li>`
             )
             .join("");
-          new bootstrap.Modal(
-            document.getElementById("deleteAlimentoModal")
-          ).show();
+
+          document.getElementById("listaAlimentos").innerHTML = alimentosLista;
+
+          document.querySelectorAll(".delete-btn").forEach((button) => {
+            button.addEventListener("click", (event) => {
+              alimentoIdSelecionado = event.target.dataset.documentId;
+
+              //atualiza o texto do modal
+              const alimentoSelecionado =
+                event.target.previousElementSibling.textContent;
+              document.getElementById(
+                "deleteDoacaoModalLabel"
+              ).innerText = `Excluir "${alimentoSelecionado}"?`;
+            });
+          });
         } catch (error) {
           console.error("Erro ao buscar alimentos:", error);
         }
       });
 
-    // Confirmação e exclusão de alimentos
+    // Confirmação
     document
-      .getElementById("confirmDeleteAlimentoBtn")
+      .getElementById("confirmDeleteBtn")
       ?.addEventListener("click", async () => {
-        const alimentoId = document.getElementById("alimentoSelect").value;
-        if (confirm("Tem certeza que deseja excluir este alimento?")) {
+        if (alimentoIdSelecionado) {
+          console.log(
+            "Tentando excluir o alimento com documentId:",
+            alimentoIdSelecionado
+          );
           try {
-            await fetch(`http://localhost:1337/api/alimentos/${alimentoId}`, {
-              method: "DELETE",
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-              },
-            });
+            await fetch(
+              `http://localhost:1337/api/alimentos/${alimentoIdSelecionado}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+              }
+            );
+
             alert("Alimento excluído com sucesso.");
             window.location.reload();
           } catch (error) {
             console.error("Erro ao excluir alimento:", error);
           }
+        } else {
+          console.error("Nenhum alimento foi selecionado para exclusão!");
         }
       });
 

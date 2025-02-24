@@ -47,7 +47,43 @@ document
     }
   });
 
-//Login
+// //Login
+// document
+//   .getElementById("loginForm")
+//   .addEventListener("submit", async (event) => {
+//     event.preventDefault();
+
+//     const email = document.getElementById("loginEmail").value;
+//     const password = document.getElementById("loginPassword").value;
+
+//     try {
+//       const response = await fetch(`${API_URL}/auth/local`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           identifier: email,
+//           password: password,
+//         }),
+//       });
+
+//       const data = await response.json();
+
+//       if (data.jwt) {
+//         alert("Login realizado com sucesso!");
+//         localStorage.setItem("jwt", data.jwt);
+//         localStorage.setItem("user", JSON.stringify(data.user));
+//         window.location.href = "homeScreen.html";
+//       } else {
+//         alert("Credenciais inválidas.");
+//       }
+//     } catch (error) {
+//       console.error("Erro:", error);
+//       alert("Erro ao fazer login. Tente novamente.");
+//     }
+//   });
+
 document
   .getElementById("loginForm")
   .addEventListener("submit", async (event) => {
@@ -59,9 +95,7 @@ document
     try {
       const response = await fetch(`${API_URL}/auth/local`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           identifier: email,
           password: password,
@@ -71,9 +105,19 @@ document
       const data = await response.json();
 
       if (data.jwt) {
-        alert("Login realizado com sucesso!");
+        //pego a role(admin, autenticando)
+        const userResponse = await fetch(`${API_URL}/users/me?populate=role`, {
+          headers: {
+            Authorization: `Bearer ${data.jwt}`,
+          },
+        });
+        const userData = await userResponse.json();
+
+        console.log("Dados completos do usuário:", userData);
+
         localStorage.setItem("jwt", data.jwt);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("user", JSON.stringify(userData));
+        alert("Login realizado com sucesso!");
         window.location.href = "homeScreen.html";
       } else {
         alert("Credenciais inválidas.");
