@@ -111,35 +111,67 @@ document
   .getElementById("formCriarDoacao")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // Obtém os valores do formulário
     const nome = document.getElementById("alimentoNome").value;
     const categoria = document.getElementById("alimentoCategoria").value;
     const descricao = document.getElementById("alimentoDescricao").value;
     const dataExpiracao = document.getElementById("dataExpiracao").value;
     const imgURL = document.getElementById("imgURL").value;
 
-    const alimentoData = {
-      name: nome,
-      category: categoria,
-      description: descricao,
-      expirationDate: dataExpiracao,
-      imgURL: imgURL,
-      foodStatus: "disponivel",
-    };
+    const token = localStorage.getItem("jwt");
+    const user = JSON.parse(localStorage.getItem("user")); // Dados do usuário logado
 
     try {
-      const token = localStorage.getItem("jwt");
-      const response = await fetch("http://localhost:1337/api/alimentos", {
+      // Cria a doação vinculando o usuário como criador
+      const doacaoResponse = await fetch("http://localhost:1337/api/doacaos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ data: alimentoData }),
+        body: JSON.stringify({
+          data: {
+            criador: user.id, // Usa o id do usuário logado
+            donateStatus: "disponivel",
+          },
+        }),
       });
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error("Erro ao criar o alimento/doação.");
+
+      if (!doacaoResponse.ok) {
+        throw new Error("Erro ao criar a doação.");
       }
+
+      const doacaoResult = await doacaoResponse.json();
+      const doacaoId = doacaoResult.data.id; // ID da doação recém-criada
+
+      // Cria o alimento relacionando-o à doação
+      const alimentoData = {
+        name: nome,
+        category: categoria,
+        description: descricao,
+        expirationDate: dataExpiracao,
+        imgURL: imgURL,
+        foodStatus: "disponivel",
+        doacao: doacaoId, // Relação com a doação que contém o criador
+      };
+
+      const alimentoResponse = await fetch(
+        "http://localhost:1337/api/alimentos",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ data: alimentoData }),
+        }
+      );
+
+      if (!alimentoResponse.ok) {
+        throw new Error("Erro ao criar o alimento.");
+      }
+
       alert("Doação criada com sucesso!");
       const modal = bootstrap.Modal.getInstance(
         document.getElementById("modalCriarDoacao")
