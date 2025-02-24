@@ -76,7 +76,7 @@ async function atualizarHeaderUsuario() {
     window.location.href = "userScreen.html";
   });
 
-  // Remove o botão de login e insere o avatar
+  //remove o botão de login
   const header = document.querySelector("header");
   const btn = document.getElementById("loginBtn");
   if (btn) {
@@ -85,22 +85,11 @@ async function atualizarHeaderUsuario() {
   header.appendChild(img);
 }
 
-// Verifica se o usuário está logado para ajustar a exibição dos botões
-async function verificarUsuario() {
-  const token = localStorage.getItem("jwt");
-  if (token) {
-    // Caso queira, você pode ocultar o botão de solicitar se o usuário logado não for para essa ação
-    // Exemplo: document.getElementById("solicitar-btn").style.display = "none";
-    // Porém, normalmente o usuário logado pode solicitar doação
-    // Se necessário, ajuste essa lógica conforme seu fluxo de negócios.
-  }
-}
-
 // Função para solicitar a doação do produto
 async function solicitarDoacao(produto) {
   const token = localStorage.getItem("jwt");
 
-  // Se o usuário não estiver logado, redireciona para a página de login
+  //redireciona para a página de login
   if (!token) {
     alert("Você precisa estar logado para solicitar uma doação!");
     window.location.href = "login-registerScreen.html";
@@ -115,13 +104,11 @@ async function solicitarDoacao(produto) {
       throw new Error("Erro ao obter informações do usuário.");
     }
 
-    // Corpo da requisição para criar uma solicitação de doação.
-    // Ajuste os campos conforme o seu schema e lógica de backend.
     const requestBody = {
       data: {
-        donateStatus: "indisponivel", // Exemplo de status, ajuste se necessário
-        alimentos: [produto.id], // Relacionamento com o alimento solicitado
-        solicitacoes: { id: userId }, // Relacionamento com o usuário solicitante
+        donateStatus: "indisponivel",
+        alimentos: [produto.id],
+        solicitacoes: { id: userId },
       },
     };
 

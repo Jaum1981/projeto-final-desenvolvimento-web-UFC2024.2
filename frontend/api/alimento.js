@@ -83,7 +83,6 @@ function atualizarHeaderUsuario(user) {
   img.addEventListener("click", () => {
     window.location.href = "userScreen.html";
   });
-  // Remove o botão de login e insere o avatar
   const header = document.querySelector("header");
   const btn = document.getElementById("loginBtn");
   if (btn) {
@@ -108,20 +107,16 @@ function exibirBotaoCriarDoacao() {
   container.appendChild(btnCriar);
 }
 
-// Lida com o envio do formulário do modal para criar o alimento (e doação)
 document
   .getElementById("formCriarDoacao")
   .addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    // Coleta dos dados do formulário
     const nome = document.getElementById("alimentoNome").value;
     const categoria = document.getElementById("alimentoCategoria").value;
     const descricao = document.getElementById("alimentoDescricao").value;
     const dataExpiracao = document.getElementById("dataExpiracao").value;
     const imgURL = document.getElementById("imgURL").value;
 
-    // Dados do alimento conforme o schema
     const alimentoData = {
       name: nome,
       category: categoria,
@@ -129,12 +124,10 @@ document
       expirationDate: dataExpiracao,
       imgURL: imgURL,
       foodStatus: "disponivel",
-      // O campo "doacao" poderá ser definido caso você tenha uma lógica para criar a doação e associá-la
     };
 
     try {
       const token = localStorage.getItem("jwt");
-      // Exemplo de criação de alimento via POST na API (ajuste a URL se necessário)
       const response = await fetch("http://localhost:1337/api/alimentos", {
         method: "POST",
         headers: {
@@ -148,12 +141,10 @@ document
         throw new Error("Erro ao criar o alimento/doação.");
       }
       alert("Doação criada com sucesso!");
-      // Fecha o modal
       const modal = bootstrap.Modal.getInstance(
         document.getElementById("modalCriarDoacao")
       );
       modal.hide();
-      // Atualiza a lista de alimentos
       carregarAlimentos();
     } catch (error) {
       console.error(error);

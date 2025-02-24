@@ -18,99 +18,104 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // Função para buscar as doações do usuário
-    // async function fetchDoacoesCriadas() {
-    //   try {
-    //     const userData = localStorage.getItem("user");
+    const isAdmin = user.role?.type === "admin"; // Corrigido aqui
+    if (isAdmin) {
+      document.getElementById("deleteUsersBtn").style.display = "inline-block";
+      document.getElementById("deleteDoacoesBtn").style.display =
+        "inline-block";
+    }
 
-    //     if (userData) {
-    //       const user = JSON.parse(userData);
-    //       const userDocumentId = user.documentId;
+    console.log("Role do usuário:", user.role); // Verifique o objeto role
+    console.log("Tipo de role do usuário:", user.role?.type); // Verifique o tipo de roleistrador
 
-    //       const responseDoacoes = await fetch(
-    //         `http://localhost:1337/api/doacaos?populate[criador]=true&populate[alimentos]=true&populate[solicitacoes]=true`,
-    //         {
-    //           headers: {
-    //             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    //           },
-    //         }
-    //       );
+    // Função para abrir modal de exclusão de usuários
+    document
+      .getElementById("deleteUsersBtn")
+      ?.addEventListener("click", async () => {
+        try {
+          const response = await fetch("http://localhost:1337/api/users", {
+            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+          });
+          const users = await response.json();
 
-    //       const dataDoacoes = await responseDoacoes.json();
-    //       const doacoesCriadas = dataDoacoes?.data || [];
-    //       const doacoesCriadasElement =
-    //         document.getElementById("doacoesCriadas");
+          document.getElementById("userSelect").innerHTML = users
+            .map(
+              (user) => `<option value="${user.id}">${user.username}</option>`
+            )
+            .join("");
+          new bootstrap.Modal(
+            document.getElementById("deleteUserModal")
+          ).show();
+        } catch (error) {
+          console.error("Erro ao buscar usuários:", error);
+        }
+      });
 
-    //       if (doacoesCriadas.length === 0) {
-    //         doacoesCriadasElement.innerHTML =
-    //           "<p class='text-center'>Você não criou nenhuma doação ainda.</p>";
-    //         return;
-    //       }
+    // Confirmação e exclusão de usuários
+    document
+      .getElementById("confirmDeleteUserBtn")
+      ?.addEventListener("click", async () => {
+        const userId = document.getElementById("userSelect").value;
+        if (confirm("Tem certeza que deseja excluir este usuário?")) {
+          try {
+            await fetch(`http://localhost:1337/api/users/${userId}`, {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+              },
+            });
+            alert("Usuário excluído com sucesso.");
+            window.location.reload();
+          } catch (error) {
+            console.error("Erro ao excluir usuário:", error);
+          }
+        }
+      });
 
-    //       // Filtra as doações que estão relacionadas ao usuário
-    //       const doacoesRelacionadas = doacoesCriadas.filter((doacao) => {
-    //         const criadorId = doacao.criador?.documentId;
-    //         const solicitacoesIds = doacao.solicitacoes.map(
-    //           (solicitacao) => solicitacao.documentId
-    //         );
+    // Função para abrir modal de exclusão de alimentos
+    document
+      .getElementById("deleteDoacoesBtn")
+      ?.addEventListener("click", async () => {
+        try {
+          const response = await fetch("http://localhost:1337/api/alimentos", {
+            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+          });
+          const alimentos = await response.json();
 
-    //         // Verifica se o usuário é o criador ou solicitante
-    //         return (
-    //           criadorId === userDocumentId ||
-    //           solicitacoesIds.includes(userDocumentId)
-    //         );
-    //       });
+          document.getElementById("alimentoSelect").innerHTML = alimentos
+            .map(
+              (alimento) =>
+                `<option value="${alimento.id}">${alimento.name}</option>`
+            )
+            .join("");
+          new bootstrap.Modal(
+            document.getElementById("deleteAlimentoModal")
+          ).show();
+        } catch (error) {
+          console.error("Erro ao buscar alimentos:", error);
+        }
+      });
 
-    //       // Cria a lista de doações filtradas
-    //       doacoesCriadasElement.innerHTML = ""; // Limpa a lista atual
-    //       doacoesRelacionadas.forEach((doacao) => {
-    //         const alimentos = doacao.alimentos || [];
-    //         const criador = doacao.criador || {};
-    //         const solicitacoes = doacao.solicitacoes || [];
-
-    //         // Cria o item de lista para a doação
-    //         const listItem = document.createElement("li");
-    //         listItem.className = "bg-info text-white p-3 mb-2 rounded";
-
-    //         let alimentoInfo = alimentos
-    //           .map(
-    //             (alimento) => `
-    //             <p><strong>Alimento:</strong> ${alimento.name} (${alimento.category})</p>
-    //             <p><strong>Descrição:</strong> ${alimento.description}</p>
-    //             <p><strong>Data de Validade:</strong> ${alimento.expirationDate}</p>
-    //             <p><img src="${alimento.imgURL}" alt="${alimento.name}" width="100" /></p>
-    //             <p><strong>Status do Alimento:</strong> ${alimento.foodStatus}</p>`
-    //           )
-    //           .join("");
-
-    //         let criadorInfo = criador.username
-    //           ? `<p><strong>Criador:</strong> ${criador.username}</p>`
-    //           : "<p><strong>Criador:</strong> Não disponível</p>";
-
-    //         let solicitacaoInfo = solicitacoes
-    //           .map(
-    //             (solicitacao) => `
-    //             <p><strong>Solicitante:</strong> ${solicitacao.username} </p>`
-    //           )
-    //           .join("");
-
-    //         listItem.innerHTML = `
-    //           <p><strong>Status da Doação:</strong> ${doacao.donateStatus}</p>
-    //           ${alimentoInfo}
-    //           ${criadorInfo}
-    //           ${solicitacaoInfo}
-    //           <p><strong>Data da Doação:</strong> ${new Date(
-    //             doacao.createdAt
-    //           ).toLocaleDateString()}</p>
-    //         `;
-
-    //         doacoesCriadasElement.appendChild(listItem);
-    //       });
-    //     }
-    //   } catch (error) {
-    //     console.error("Erro ao buscar doações:", error);
-    //   }
-    // }
+    // Confirmação e exclusão de alimentos
+    document
+      .getElementById("confirmDeleteAlimentoBtn")
+      ?.addEventListener("click", async () => {
+        const alimentoId = document.getElementById("alimentoSelect").value;
+        if (confirm("Tem certeza que deseja excluir este alimento?")) {
+          try {
+            await fetch(`http://localhost:1337/api/alimentos/${alimentoId}`, {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+              },
+            });
+            alert("Alimento excluído com sucesso.");
+            window.location.reload();
+          } catch (error) {
+            console.error("Erro ao excluir alimento:", error);
+          }
+        }
+      });
 
     async function fetchDoacoesCriadas() {
       try {
@@ -147,23 +152,19 @@ document.addEventListener("DOMContentLoaded", async () => {
               (solicitacao) => solicitacao.documentId
             );
 
-            // Verifica se o usuário é o criador ou solicitante
             return (
               criadorId === userDocumentId ||
               solicitacoesIds.includes(userDocumentId)
             );
           });
 
-          // Limpa a tabela atual
           doacoesCriadasElement.innerHTML = "";
 
-          // Cria as linhas da tabela com as doações filtradas
           doacoesRelacionadas.forEach((doacao) => {
             const alimentos = doacao.alimentos || [];
             const criador = doacao.criador || {};
             const solicitacoes = doacao.solicitacoes || [];
 
-            // Cria a linha da tabela
             const row = document.createElement("tr");
 
             let alimentoInfo = alimentos

@@ -41,6 +41,20 @@
         />
         <h2 id="userName" style="color: white">Nome do Usuário</h2>
         <button id="logoutBtn" class="btn btn-secondary mt-3">Sair</button>
+        <button
+          id="deleteUsersBtn"
+          class="btn btn-danger mt-3 ms-2"
+          style="display: none"
+        >
+          Excluir Usuários
+        </button>
+        <button
+          id="deleteDoacoesBtn"
+          class="btn btn-danger mt-3 ms-2"
+          style="display: none"
+        >
+          Excluir Doações
+        </button>
       </div>
     </section>
 
@@ -63,6 +77,57 @@
         <tbody id="doacoesCriadas"></tbody>
       </table>
     </section>
+
+    <!-- Botão para excluir (aparece apenas para admin) -->
+    <td class="text-center">
+      <button
+        class="btn btn-danger btn-sm delete-doacao-btn"
+        data-doacao-id="${doacao.id}"
+        style="display: none"
+      >
+        Excluir
+      </button>
+    </td>
+
+    <!-- Modal de confirmação -->
+    <div
+      class="modal fade"
+      id="confirmDeleteModal"
+      tabindex="-1"
+      aria-labelledby="confirmDeleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteModalLabel">
+              Confirmar Exclusão
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza que deseja excluir esta doação?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+              Excluir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer
       style="

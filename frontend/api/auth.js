@@ -73,7 +73,7 @@ document
       if (data.jwt) {
         alert("Login realizado com sucesso!");
         localStorage.setItem("jwt", data.jwt);
-        localStorage.setItem("user", JSON.stringify(data.user)); // Salva também os dados do usuário
+        localStorage.setItem("user", JSON.stringify(data.user));
         window.location.href = "homeScreen.html";
       } else {
         alert("Credenciais inválidas.");
